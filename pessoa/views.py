@@ -12,12 +12,14 @@ class ListaPessoaView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        queryset = queryset.filter(usuario=self.request.user)
         filtro_nome = self.request.GET.get('nome') or None
 
         if filtro_nome:
             queryset = queryset.filter(nome_completo__contains=filtro_nome)
-        
+
         return queryset
+    
 
 
 class PessoaCreateView(CreateView):
@@ -25,10 +27,16 @@ class PessoaCreateView(CreateView):
     form_class = PessoaForm
     success_url = '/pessoas/'
 
+    def form_valid(self, form):
+        form.instance.usuario = self.request.user
+        return super().form_valid(form)
+
+
 class PessoaUpdateView(UpdateView):
     model = Pessoa
     form_class = PessoaForm
     success_url = '/pessoas/'
+
 
 class PessoaDeleteView(DeleteView):
     model = Pessoa
@@ -37,7 +45,7 @@ class PessoaDeleteView(DeleteView):
 
 def contatos(request, pk_pessoa):
     contatos = Contato.objects.filter(pessoa=pk_pessoa)
-    return render(request, 'contato/contato_list.html', {'contatos': contatos,'pk_pessoa': pk_pessoa})
+    return render(request, 'contato/contato_list.html', {'contatos': contatos, 'pk_pessoa': pk_pessoa})
 
 
 def contato_novo(request, pk_pessoa):
