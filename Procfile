@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn wsgi:cadastro-pessoas
+web: gunicorn cadastro-pessoas:wsgi
