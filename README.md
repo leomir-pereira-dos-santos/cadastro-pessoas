@@ -27,6 +27,6 @@ bibliotecas utilizadas estão dentro da pasta requiriments.txt
 * tzdata==2022.4
 
 Como rodar o programa 
-clone o repositorio , depois abra em seu vs code 
+clone o repositorio , depois abra na IdE de sua preferencia eu usei o VSCode  
 
 instale as bibliotecas usando o comando no terminal ```pip freeze > requirements.txt ```
